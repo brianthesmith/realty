@@ -1,28 +1,52 @@
 package com.smithforge.realty;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class BookingManager {
 
-	private Set<Booking> bookings = new HashSet<Booking>();
+	private List<Booking> bookings = new ArrayList<Booking>();
 
 	public void addBooking(Booking booking) throws IllegalBookingException {
-		if (!this.bookings.add(booking)) {
-			throw new IllegalBookingException("Booking Exists for the specified date already");
+		if (bookings.contains(booking)) {
+			throw new IllegalBookingException("Duplicate Bookings");
+		} else {
+			makeBooking(booking);
 		}
+
 	}
 
-	public List<Date> getAllBookingDates() {
-		List<Date> dates = new ArrayList<Date>();
+	public List<BookingDate> getAllBookingDates() {
+
+		List<BookingDate> bookingDates = new ArrayList<BookingDate>();
 
 		for (Booking booking : bookings) {
-			dates.addAll(booking.getDates());
+			bookingDates.addAll(booking.getDates());
 		}
-		return dates;
+		return bookingDates;
+	}
+
+	private void makeBooking(Booking booking) throws IllegalBookingException {
+		List<BookingDate> allBookingDates = new ArrayList<BookingDate>();
+		boolean doubleBook = false;
+		String errorMessage = "Duplicate Booing on: ";
+
+		for (Booking existingBooking : bookings) {
+			allBookingDates.addAll(existingBooking.getDates());
+		}
+
+		for (BookingDate newBookingDate : booking.getDates()) {
+			if (allBookingDates.contains(newBookingDate)) {
+				doubleBook = true;
+				errorMessage += newBookingDate.toString();
+			}
+		}
+
+		if (doubleBook) {
+			throw new IllegalBookingException(errorMessage);
+		} else {
+			this.bookings.add(booking);
+		}
 	}
 
 }

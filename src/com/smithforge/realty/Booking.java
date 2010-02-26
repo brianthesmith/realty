@@ -1,15 +1,14 @@
 package com.smithforge.realty;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import com.smithforge.realty.BookingDate.BookingDateUnit;
 
 public class Booking {
 
 	private BookingDate startDate;
 	private BookingDate endDate;
-
-	private long MILLS_IN_DAY = 1000 * 60 * 60 * 24;
 
 	public Booking(BookingDate startDate, BookingDate endDate) throws IllegalBookingException {
 		if (startDate.equals(endDate)) {
@@ -22,23 +21,19 @@ public class Booking {
 		this.endDate = endDate;
 	}
 
-	public List<Date> getDates() {
+	public List<BookingDate> getDates() {
 
-		List<Date> dates = new ArrayList<Date>();
+		int startDay = startDate.get(BookingDateUnit.DAY_OF_YEAR);
+		int endDay = endDate.get(BookingDateUnit.DAY_OF_YEAR);
 
-		dates.add(startDate.getTime());
-		long millis = endDate.getTimeInMillis() - startDate.getTimeInMillis();
+		List<BookingDate> allDates = new ArrayList<BookingDate>();
 
-		long days = millis / MILLS_IN_DAY;
-
-		BookingDate start = startDate.copy();
-
-		for (long d = 1; d < days; d++) {
-			start.add(BookingDate.BookingDateUnit.DAY_OF_YEAR, 1);
-			dates.add(start.getTime());
+		for (int i = startDay; i < endDay; i++) {
+			BookingDate newDate = new BookingDate(startDate.get(BookingDateUnit.YEAR), i);
+			allDates.add(newDate);
 		}
+		return allDates;
 
-		return dates;
 	}
 
 	@Override
