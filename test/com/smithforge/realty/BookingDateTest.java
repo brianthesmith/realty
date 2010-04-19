@@ -5,7 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -139,4 +142,22 @@ public class BookingDateTest {
 		assertEquals(1, b.get(BookingDateUnit.DAY_OF_YEAR));
 	}
 
+	@Test
+	public void testToStringReturnsDateFormattedDDDMMYYY() {
+		BookingDate b = new BookingDate(2010, 1);
+
+		Date date = createDefaultCalendar(2010, 1).getTime();
+
+		DateFormat format = new SimpleDateFormat("EEEE, MMMM DD yyyy");
+		String expected = format.format(date);
+
+		assertEquals(expected, b.toString());
+
+		b = new BookingDate(2010, 276);
+		date = createDefaultCalendar(2010, 276).getTime();
+
+		expected = format.format(date);
+
+		assertEquals(expected, b.toString());
+	}
 }

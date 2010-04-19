@@ -1,5 +1,7 @@
 package com.smithforge.realty;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,7 +41,11 @@ public class BookingDate {
 
 	@Override
 	public String toString() {
-		return this.calendar.getTime().toString();
+		Date time = this.calendar.getTime();
+
+		DateFormat format = new SimpleDateFormat("EEEE, MMMM DD yyyy");
+		String string = format.format(time);
+		return string;
 
 	}
 

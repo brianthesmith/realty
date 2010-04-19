@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module rename-to='realty'>
+<module rename-to='condo'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
 
@@ -14,6 +14,8 @@
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.smithforge.realty.client.Condo'/>
+  <servlet path="/bookings" class="com.smithforge.realty.BookingManager" />
+  
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

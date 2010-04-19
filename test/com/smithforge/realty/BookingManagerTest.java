@@ -7,12 +7,15 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.smithforge.realty.server.BookingManager;
+import com.smithforge.realty.server.IBookingManager;
+
 public class BookingManagerTest {
 
 	@Test
 	public void testWhenSingleBookingAddedToManagerDatesFromBookingAreReturned() throws Exception {
 
-		BookingManager manager = new BookingManager();
+		IBookingManager manager = new BookingManager();
 		BookingDate start = new BookingDate(2010, 1);
 		BookingDate end = new BookingDate(2010, 2);
 
@@ -27,7 +30,7 @@ public class BookingManagerTest {
 
 	@Test
 	public void testWhenManyNonOverlappingBookingsAddedAllDatesReturned() throws IllegalBookingException {
-		BookingManager manager = new BookingManager();
+		IBookingManager manager = new BookingManager();
 		BookingDate startOne = new BookingDate(2010, 1);
 		BookingDate endOne = new BookingDate(2010, 2);
 
@@ -54,7 +57,7 @@ public class BookingManagerTest {
 
 	@Test
 	public void testWhenTwoEqualBookingsAddedExceptionIsThrown() throws IllegalBookingException {
-		BookingManager manager = new BookingManager();
+		IBookingManager manager = new BookingManager();
 		BookingDate startOne = new BookingDate(2010, 1);
 		BookingDate endOne = new BookingDate(2010, 2);
 
@@ -83,7 +86,7 @@ public class BookingManagerTest {
 
 	@Test
 	public void testWhenTwoOverlappingBookingsAddedExceptionIsThrown() throws IllegalBookingException {
-		BookingManager manager = new BookingManager();
+		IBookingManager manager = new BookingManager();
 		BookingDate startOne = new BookingDate(2010, 1);
 		BookingDate endOne = new BookingDate(2010, 2);
 
